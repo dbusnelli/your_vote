@@ -28,6 +28,10 @@ const Votacion = (props) => {
     setItemsVotacion(newData);
   };
 
+  const eliminarItem = (id) => {
+    console.log(id);
+  }
+
   return (
     <>
       <p class="h3"> - {nombre}</p>
@@ -37,6 +41,7 @@ const Votacion = (props) => {
           {itemsVotacion.map((item) => (
             <div key={item.id}>
             <VotacionItem item={item} />
+            <button type="button" class="btn btn-danger" onClick={() => eliminarItem(item.id)}>Eliminar</button>
             </div>
           ))}
         </ul>
