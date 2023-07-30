@@ -1,13 +1,17 @@
-const VotacionItem = () => {
+import { useState } from "react";
 
-    return (
-        <>
-            <p class="h3"> Nombre: </p>
-            <p class="h3"> Votos: </p>
-            
-        </>
-    ) 
+const VotacionItem = (props) => {
+  const [id, setId] = useState(props.item.id);
+  const [titulo, setNombre] = useState(props.item.titulo);
+  const [votos, setVotos] = useState(props.item.votos);
 
-}
+  return (
+    <>
+      <li class="list-group-item">
+        <p>{titulo} | Votos: {votos}</p>
+      </li>
+    </>
+  );
+};
 
 export default VotacionItem;
