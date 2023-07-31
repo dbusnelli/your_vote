@@ -1,5 +1,7 @@
 import VotacionItem from "./VotacionItem";
 import { useEffect, useState } from "react";
+import { supabase } from "../../supabase/Config";
+import {eliminarItemVotacionById} from "../../supabase/Crud"
 
 const Votacion = (props) => {
   const [id, setId] = useState(props.votacion.id);
@@ -12,7 +14,9 @@ const Votacion = (props) => {
   }, []);
 
   const obtenerItemsVotacionById = async () => {
+    let result = await supabase.from('items_votaciones').select('*').eq('id_votacion', id);
     
+    setItemsVotacion(result.data); 
   };
 
   const eliminarItem = (id) => {
@@ -21,10 +25,6 @@ const Votacion = (props) => {
         setItemsVotacion(newItemsVotacion);
         eliminarItemVotacionById(id);
     }
-  }
-
-  const eliminarItemVotacionById = async(id) => {
-    
   }
 
   return (

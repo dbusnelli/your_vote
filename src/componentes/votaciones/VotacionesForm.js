@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { addVotacionOnSupabase, obtenerVotaciones } from "../../supabase/Crud";
+import { addVotacionOnSupabase } from "../../supabase/Crud";
+import { supabase } from "../../supabase/Config";
 import Votacion from "./Votacion";
 
 const VotacionesForm = () => {
@@ -8,8 +9,18 @@ const VotacionesForm = () => {
   const [votaciones, setVotaciones] = useState([]);
 
   useEffect(() => {
-    setVotaciones(obtenerVotaciones);
+    const obtenerVotaciones = async () => {
+    
+
+      let result = await supabase.from('votaciones').select('*');
+    
+      setVotaciones(result.data); 
+    
+    }
+    obtenerVotaciones();
   }, []);
+
+  
 
   const handleSubmit = (e) => {
     if (validarCampos()) {
@@ -81,9 +92,7 @@ const VotacionesForm = () => {
         <div className="col-md-8">
           {votaciones.map((votacion) => (
             <div key={votacion.id}>
-                <p class="h4">votacion.nombre</p>
-                <p class="h4">votacion.descripcion</p>
-              {/*<Votacion votacion={votacion} />*/}
+              {<Votacion votacion={votacion} />}
             </div>
           ))}
         </div>

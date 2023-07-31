@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { updateItemVotacion } from "../../supabase/Crud";
 
 const VotacionItem = (props) => {
   const [id, setId] = useState(props.item.id);
@@ -8,6 +9,8 @@ const VotacionItem = (props) => {
   const [editando, setEditando] = useState(false);
   const [nuevoNombre, setNuevoNombre] = useState(nombre);
   const [nuevosVotos, setNuevosVotos] = useState(votos);
+  const [usuarioVoto, setUsuarioVoto] = useState(false);
+  const [limiteDeVotosAlcanzado, setLimiteDeVotosAlcanzado] = useState(false);
 
   const handleEditar = () => {
     setEditando(!editando);
@@ -17,25 +20,35 @@ const VotacionItem = (props) => {
     setNombre(nuevoNombre);
     setVotos(nuevosVotos);
     setEditando(!editando);
-    handleGuardar();
-  };
-
-  const handleMenos = () => {
-    if (votos > 0) {
-      let newVotos = votos - 1;
-      setVotos(newVotos);
-      setNuevosVotos(newVotos);
+    let data  = {
+      id: id,
+      nombre: nuevoNombre,
+      votos: nuevosVotos
     }
+    console.log(data)
+    guardarEnSupabase(data);
   };
 
   const handleMas = () => {
     let newVotos = votos + 1;
     setVotos(newVotos);
     setNuevosVotos(newVotos);
+    setUsuarioVoto(true)
+    setLimiteDeVotosAlcanzado(true);
   };
 
-  const handleGuardar = () => {
-    console.log("guardando...");
+  const handleGuardarVotos = () => {
+    let data = {
+      id: id,
+      nombre: null,
+      votos: votos
+    }
+    setUsuarioVoto(!usuarioVoto);
+    guardarEnSupabase(data);
+  }
+
+  const guardarEnSupabase = (data) => {
+    updateItemVotacion(data)
   }
 
   return (
@@ -44,18 +57,20 @@ const VotacionItem = (props) => {
         <p>
           {nombre} | Votos: {votos}
         </p>
+        {!limiteDeVotosAlcanzado ?
         <button type="button" class="btn btn-success" onClick={handleMas}>
-          +
+          Votar
         </button>
-        <button type="button" class="btn btn-warning" onClick={handleMenos}>
-          -
-        </button>
+        :null}
         <button type="button" class="btn btn-secondary" onClick={handleEditar}>
           Editar
         </button>
-        <button type="button" class="btn btn-primary" onClick={handleGuardar}>
-          Guardar Votos
-        </button>
+        {usuarioVoto ?
+        <button type="button" class="btn btn-primary" onClick={handleGuardarVotos}>
+        Guardar Votos
+      </button>
+        : null}
+        
       </li>
       {editando ? (
         <>
