@@ -1,6 +1,4 @@
 import VotacionItem from "./VotacionItem";
-import { db } from "../../firebase/Config";
-import { collection, query, where, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 const Votacion = (props) => {
@@ -14,22 +12,19 @@ const Votacion = (props) => {
   }, []);
 
   const obtenerItemsVotacionById = async () => {
-    let votacionesItemCollection = "items_votaciones";
-    const q = query(
-      collection(db, votacionesItemCollection),
-      where("id_votacion", "==", id)
-    );
-
-    let newData = [];
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      newData.push({ ...doc.data(), id: doc.id });
-    });
-    setItemsVotacion(newData);
+    
   };
 
   const eliminarItem = (id) => {
-    console.log(id);
+    if(window.confirm("Estas seguro que deseas eliminar el Item de la votacion?")){
+        const newItemsVotacion = itemsVotacion.filter((item) => item.id !== id);
+        setItemsVotacion(newItemsVotacion);
+        eliminarItemVotacionById(id);
+    }
+  }
+
+  const eliminarItemVotacionById = async(id) => {
+    
   }
 
   return (

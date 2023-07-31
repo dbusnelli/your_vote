@@ -1,8 +1,5 @@
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../firebase/Config";
-//Se eliminara con redux
 import { useState, useEffect } from "react";
-import { addVotacionOnFirebase } from "../../firebase/Crud";
+import { addVotacionOnSupabase, obtenerVotaciones } from "../../supabase/Crud";
 import Votacion from "./Votacion";
 
 const VotacionesForm = () => {
@@ -11,18 +8,8 @@ const VotacionesForm = () => {
   const [votaciones, setVotaciones] = useState([]);
 
   useEffect(() => {
-    obtenerVotaciones();
+    setVotaciones(obtenerVotaciones);
   }, []);
-
-  const obtenerVotaciones = async () => {
-    let votacionesCollection = "votaciones";
-    let newData = [];
-    const querySnapshot = await getDocs(collection(db, votacionesCollection));
-    querySnapshot.forEach((doc) => {
-      newData.push({ ...doc.data(), id: doc.id });
-    });
-    setVotaciones(newData);
-  };
 
   const handleSubmit = (e) => {
     if (validarCampos()) {
@@ -31,7 +18,7 @@ const VotacionesForm = () => {
         nombre: titulo,
         descripcion: descripcion,
       };
-      addVotacionOnFirebase(newVotacion);
+      addVotacionOnSupabase(newVotacion);
       setVotaciones([...votaciones, newVotacion]);
       setTitulo("");
       setDescripcion("");
@@ -94,7 +81,9 @@ const VotacionesForm = () => {
         <div className="col-md-8">
           {votaciones.map((votacion) => (
             <div key={votacion.id}>
-              <Votacion votacion={votacion} />
+                <p class="h4">votacion.nombre</p>
+                <p class="h4">votacion.descripcion</p>
+              {/*<Votacion votacion={votacion} />*/}
             </div>
           ))}
         </div>

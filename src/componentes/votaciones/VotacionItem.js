@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const VotacionItem = (props) => {
   const [id, setId] = useState(props.item.id);
-  const [nombre, setNombre] = useState(props.item.titulo);
+  const [nombre, setNombre] = useState(props.item.nombre);
   const [votos, setVotos] = useState(props.item.votos);
 
   const [editando, setEditando] = useState(false);
