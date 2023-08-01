@@ -27,9 +27,11 @@ const VotacionesForm = () => {
       e.preventDefault();
       let newVotacion = {
         nombre: titulo,
-        descripcion: descripcion,
+        descripcion: descripcion
       };
-      addVotacionOnSupabase(newVotacion);
+      let idNew = addVotacionOnSupabase(newVotacion);
+      console.log(idNew)
+      newVotacion.id = idNew;
       setVotaciones([...votaciones, newVotacion]);
       setTitulo("");
       setDescripcion("");

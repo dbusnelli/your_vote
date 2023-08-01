@@ -7,7 +7,15 @@ const votacionesItemCollection = 'items_votaciones';
 //TODO: AGREGAR REDUX
 
 export const addVotacionOnSupabase = async (votacion) => {
-    
+
+  console.log(votacion)
+  const result = await supabase
+  .from('votaciones')
+  .insert([{
+      nombre: votacion.nombre,
+      descripcion: votacion.descripcion 
+  },])
+  .select()
 }
 
 export const obtenerVotaciones = async () => {
