@@ -1,29 +1,38 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux/es/hooks/useSelector";
-import { fetchVotaciones } from "../../supabase/Crud";
+import { useSelector, useDispatch } from "react-redux";
+import { supabase } from "../../supabase/Config";
+import { modifyVotaciones } from "../../redux/reducers/votaciones";
 import Votacion from "./Votacion";
+import { SUPABASE_VOTACIONES_COLLECTION } from "../../utils/constants";
 
 const VotacionesForm = () => {
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const votaciones = useSelector((state) => state.votaciones.votaciones);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetchVotaciones();
   }, [])
   
+  const fetchVotaciones = async () => {
+    let result = await supabase.from(SUPABASE_VOTACIONES_COLLECTION).select('*');
+    dispatch(modifyVotaciones(result.data));
+  }
 
   const handleSubmit = (e) => {
     if (validarCampos()) {
       e.preventDefault();
       let newVotacion = {
+        id:1,
         nombre: titulo,
         descripcion: descripcion
       };
-      //let idNew = addVotacionOnSupabase(newVotacion);
+      let newVotaciones = [];
+      newVotaciones.push(newVotacion);
       setTitulo("");
       setDescripcion("");
-      console.log(votaciones)
+      dispatch(modifyVotaciones(newVotaciones))
     }
   };
 

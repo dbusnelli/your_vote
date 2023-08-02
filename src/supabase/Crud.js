@@ -1,14 +1,15 @@
+import { modifyVotaciones } from "../redux/reducers/votaciones";
+import { useDispatch } from 'react-redux';
 import { supabase } from "./Config";
-
 
 const votacionesCollection = 'votaciones';
 const votacionesItemCollection = 'items_votaciones';
+const dispatch = useDispatch();
 
 //TODO: AGREGAR REDUX
 
-export const addVotacionOnSupabase = async (votacion) => {
+const addVotacionOnSupabase = async (votacion) => {
 
-  console.log(votacion)
   const result = await supabase
   .from('votaciones')
   .insert([{
@@ -18,23 +19,21 @@ export const addVotacionOnSupabase = async (votacion) => {
   .select()
 }
 
-export const fetchVotaciones = async () => {
+const fetchVotaciones = async () => {
   let result = await supabase.from(votacionesCollection).select('*');
   console.log(result.data)
-  
+  dispatch(modifyVotaciones(result.data));
 }
 
-export const obtenerItemsVotacionById = async (id) => {
+const obtenerItemsVotacionById = async (id) => {
   let result = await supabase.from('items_votaciones').select('*').eq('id_votacion', id);
 };
 
-export const eliminarItemVotacionById = async(id) => {
+const eliminarItemVotacionById = async(id) => {
   const { error } = await supabase.from('items_votaciones').delete().eq('id', id);
 }
 
-export const updateItemVotacion = async(itemVotacion) => {
-
-  console.log(itemVotacion);
+const updateItemVotacion = async(itemVotacion) => {
   
   const { data, error } = await supabase
     .from('items_votaciones')
@@ -43,3 +42,6 @@ export const updateItemVotacion = async(itemVotacion) => {
     .select();
 
 }
+
+export default Crud;
+

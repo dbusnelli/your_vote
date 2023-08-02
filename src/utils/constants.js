@@ -1,0 +1,1 @@
+export const SUPABASE_VOTACIONES_COLLECTION = 'votaciones';

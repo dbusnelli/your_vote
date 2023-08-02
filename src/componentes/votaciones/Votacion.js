@@ -1,7 +1,7 @@
 import VotacionItem from "./VotacionItem";
 import { useEffect, useState } from "react";
 import { supabase } from "../../supabase/Config";
-import {eliminarItemVotacionById} from "../../supabase/Crud"
+//import {eliminarItemVotacionById} from "../../supabase/Crud"
 
 const Votacion = (props) => {
   const [id, setId] = useState(props.votacion.id);
@@ -23,7 +23,7 @@ const Votacion = (props) => {
     if(window.confirm("Estas seguro que deseas eliminar el Item de la votacion?")){
         const newItemsVotacion = itemsVotacion.filter((item) => item.id !== id);
         setItemsVotacion(newItemsVotacion);
-        eliminarItemVotacionById(id);
+        //eliminarItemVotacionById(id);
     }
   }
 

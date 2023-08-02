@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from '../reducers/votaciones';
+import votacionesReducer from './reducers/votaciones';
 
 export default configureStore({
   reducer: {
-      votaciones: userReducer
+      votaciones: votacionesReducer
   }
 })

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { updateItemVotacion } from "../../supabase/Crud";
+//import { updateItemVotacion } from "../../supabase/Crud";
 
 const VotacionItem = (props) => {
   const [id, setId] = useState(props.item.id);
@@ -25,7 +25,6 @@ const VotacionItem = (props) => {
       nombre: nuevoNombre,
       votos: nuevosVotos
     }
-    console.log(data)
     guardarEnSupabase(data);
   };
 
@@ -48,7 +47,7 @@ const VotacionItem = (props) => {
   }
 
   const guardarEnSupabase = (data) => {
-    updateItemVotacion(data)
+    //updateItemVotacion(data)
   }
 
   return (
