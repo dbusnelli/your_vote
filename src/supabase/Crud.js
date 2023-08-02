@@ -18,13 +18,10 @@ export const addVotacionOnSupabase = async (votacion) => {
   .select()
 }
 
-export const obtenerVotaciones = async () => {
-    
-
+export const fetchVotaciones = async () => {
   let result = await supabase.from(votacionesCollection).select('*');
-
-  return result.data;  
-
+  console.log(result.data)
+  
 }
 
 export const obtenerItemsVotacionById = async (id) => {
