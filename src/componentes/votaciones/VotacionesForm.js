@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { supabase } from "../../supabase/Config";
 import { modifyVotaciones } from "../../redux/reducers/votaciones";
 import Votacion from "./Votacion";
-import { SUPABASE_VOTACIONES_COLLECTION } from "../../utils/constants";
+
+import { fetchVotaciones } from "../../supabase/Crud";
 
 const VotacionesForm = () => {
   const [titulo, setTitulo] = useState("");
@@ -12,12 +12,11 @@ const VotacionesForm = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchVotaciones();
+    fetchVotaciones(modificarVotaciones);
   }, [])
   
-  const fetchVotaciones = async () => {
-    let result = await supabase.from(SUPABASE_VOTACIONES_COLLECTION).select('*');
-    dispatch(modifyVotaciones(result.data));
+  const modificarVotaciones = (data) => {
+    dispatch(modifyVotaciones(data));
   }
 
   const handleSubmit = (e) => {
