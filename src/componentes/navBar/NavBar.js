@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { PATH_CREAR_VOTACION, PATH_HOME, PATH_LOGIN, PATH_MIS_VOTACIONES } from "../../utils/constants";
+import Searcher from "../votaciones/Searcher";
 
 const NavBar = () => {
   const [isLogged, setIsLogged] = useState(true);
@@ -41,7 +43,7 @@ const NavBar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link className="nav-link" aria-current="page" to="/">
+              <Link className="nav-link" aria-current="page" to={PATH_HOME}>
                 Inicio
               </Link>
             </li>
@@ -60,12 +62,12 @@ const NavBar = () => {
                   </a>
                   <ul className={menuClass}>
                     <li>
-                      <Link className="dropdown-item" to="/crearVotacion">
+                      <Link className="dropdown-item" to={PATH_CREAR_VOTACION}>
                         Crear Votacion
                       </Link>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="/">
+                      <Link className="dropdown-item" to={PATH_MIS_VOTACIONES}>
                         Mis Votaciones
                       </Link>
                     </li>
@@ -77,19 +79,9 @@ const NavBar = () => {
         </div>
         <div>
           <ul className="navbar-nav d-flex container-fluid">
-            <li className="nav-item me-1">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Buscar Votacion"
-                aria-label="Search"
-              />
-            </li>
-            <li className="nav-item">
-              <button className="btn btn-outline-success me-3" type="submit">
-                Buscar
-              </button>
-            </li>
+          <li className="nav-item me-1">
+            <Searcher/>
+          </li>
             {isLogged ? (
               <>
                 <li className="nav-item">
@@ -106,7 +98,7 @@ const NavBar = () => {
             ) : (
               <>
                 <li className="nav-item">
-                  <Link className="nav-link" aria-current="page" to="login">
+                  <Link className="nav-link" aria-current="page" to={PATH_LOGIN}>
                     Login
                   </Link>
                 </li>

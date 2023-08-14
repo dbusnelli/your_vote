@@ -1,27 +1,25 @@
-import { useState,  } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { modifyVotaciones } from "../../redux/reducers/votaciones";
+import { useState  } from "react";
+import { useNavigate } from "react-router-dom";
+import { addVotacionOnSupabase } from "../../supabase/Crud";
+import { PATH_MIS_VOTACIONES } from "../../utils/constants";
 
 
 const VotacionesForm = () => {
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
-  const votaciones = useSelector((state) => state.votaciones.votaciones);
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     if (validarCampos()) {
       e.preventDefault();
       let newVotacion = {
-        id:1,
+        id: 1,
         nombre: titulo,
-        descripcion: descripcion
+        descripcion: descripcion,
       };
-      let newVotaciones = [];
-      newVotaciones.push(newVotacion);
-      setTitulo("");
-      setDescripcion("");
-      dispatch(modifyVotaciones(newVotaciones))
+      addVotacionOnSupabase(newVotacion);
+
+      navigate(PATH_MIS_VOTACIONES);
     }
   };
 
