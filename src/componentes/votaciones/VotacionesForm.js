@@ -1,23 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState,  } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { modifyVotaciones } from "../../redux/reducers/votaciones";
-import Votacion from "./Votacion";
 
-import { fetchVotaciones } from "../../supabase/Crud";
 
 const VotacionesForm = () => {
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const votaciones = useSelector((state) => state.votaciones.votaciones);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    fetchVotaciones(modificarVotaciones);
-  }, [])
-  
-  const modificarVotaciones = (data) => {
-    dispatch(modifyVotaciones(data));
-  }
 
   const handleSubmit = (e) => {
     if (validarCampos()) {
@@ -85,19 +75,6 @@ const VotacionesForm = () => {
           </button>
         </div>
       </div>
-
-      <p class="h2">Sus Votaciones</p>
-      {votaciones.length > 0 ? (
-        <div className="col-md-8">
-          {votaciones.map((votacion) => (
-            <div key={votacion.id}>
-              {<Votacion votacion={votacion} />}
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p class="h4">No tiene votaciones aun</p>
-      )}
     </>
   );
 };
