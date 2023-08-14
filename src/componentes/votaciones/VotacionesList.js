@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { modifyVotaciones } from "../../redux/reducers/votaciones";
 import { fetchVotaciones } from "../../supabase/Crud";
 import { CHEQUEA_ESTAS_VOTACIONES, CREA_TU_PRIMERA_VOTACION, PATH_CREAR_VOTACION, RESULTADO_BUSQUEDA, SE_EL_PRIMERO, SIN_RESULTADOS, SIN_VOTACIONES_USUARIO, SUS_VOTACIONES } from "../../utils/constants";
-import Votacion from "../votaciones/Votacion";
+import VotacionCard from "./VotacionCard";
 
 const VotacionesList = (props) => {
   const votaciones = useSelector((state) => state.votaciones.votaciones);
@@ -36,7 +36,7 @@ const VotacionesList = (props) => {
       {votaciones.length > 0 ? (
         <div className="col-md-8">
           {votaciones.map((votacion) => (
-            <div key={votacion.id}>{<Votacion votacion={votacion} />}</div>
+            <div key={votacion.id}>{<VotacionCard votacion={votacion} />}</div>
           ))}
         </div>
       ) : (
