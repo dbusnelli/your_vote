@@ -27,12 +27,13 @@ export const obtenerItemsVotacionById = async (id, modificarItemsVotacion) => {
   modificarItemsVotacion(result.data);
 };
 
-export const updateItemVotacion = async(itemVotacion) => {
+export const updateItemVotacion = async(itemVotacion, modificarItemsVotacion) => {
   
   const { data, error } = await supabase
     .from('items_votaciones')
     .update({ votos: itemVotacion.votos , nombre: itemVotacion.nombre }, {nombre: itemVotacion.nombre})
     .eq('id', itemVotacion.id)
     .select();
-  console.log(data, error)
+  console.log(data);
+  modificarItemsVotacion(data);
 }

@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { updateItemVotacion } from "../../supabase/Crud";
+import { useDispatch } from "react-redux";
+import { modifyItemsVotaciones } from "../../redux/reducers/votaciones";
+import { obtenerItemsVotacionById, updateItemVotacion } from "../../supabase/Crud";
 //import { updateItemVotacion } from "../../supabase/Crud";
 
 const VotacionItem = (props) => {
   const [id, setId] = useState(props.item.id);
   const [nombre, setNombre] = useState(props.item.nombre);
   const [votos, setVotos] = useState(props.item.votos);
+  const dispatch = useDispatch();
 
   const [usuarioVoto, setUsuarioVoto] = useState(false);
 
@@ -22,7 +25,7 @@ const VotacionItem = (props) => {
       votos: votos
     }
     setUsuarioVoto(false);
-    updateItemVotacion(data);
+    updateItemVotacion(data, props.modificarItemsVotacion);
   }
 
   return (

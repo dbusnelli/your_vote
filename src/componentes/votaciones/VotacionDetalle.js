@@ -35,7 +35,7 @@ const Votacion = () => {
         <ul className="list-group list-group-flush">
           {itemsVotacion.map((item) => (
             <div key={item.id}>
-            <VotacionItem item={item} />
+            <VotacionItem item={item} modificarItemsVotacion={modificarItemsVotacion}/>
             </div>
           ))}
         </ul>
@@ -43,7 +43,7 @@ const Votacion = () => {
       ) : (
         <div className="row justify-content-center">
             <figure className="text-center">
-              <hr classNames="hr" />
+              <hr className="hr" />
               <p className="h4">No hay Items en esta votacion</p>
             </figure>
         </div>
