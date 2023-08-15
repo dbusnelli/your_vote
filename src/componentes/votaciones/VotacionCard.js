@@ -7,12 +7,12 @@ const VotacionCard = (props) => {
   const votacionDescripcion = props.votacion.descripcion;
 
   return (
-    <div class="card mb-3">
-      <div class="card-body">
-        <h4 class="card-title">{votacionTitulo}</h4>
-        <h6 class="card-subtitle mb-2 text-muted">Creado por un usuario</h6>
-        <p class="card-text">{votacionDescripcion}</p>
-        <Link to={PATH_VOTACION_DETALLE + votacionId} class="card-link">
+    <div className="card mb-3">
+      <div className="card-body">
+        <h4 className="card-title">{votacionTitulo}</h4>
+        <h6 className="card-subtitle mb-2 text-muted">Creado por un usuario</h6>
+        <p className="card-text">{votacionDescripcion}</p>
+        <Link to={PATH_VOTACION_DETALLE + votacionId} className="card-link">
           Ver Votacion
         </Link>
       </div>

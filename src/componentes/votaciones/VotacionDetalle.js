@@ -27,12 +27,12 @@ const Votacion = () => {
 
   return (
     <>
-      <p class="h3"> {votacion ? votacion.nombre : null}</p>
-      <p class="h5"> {votacion ? votacion.descripcion : null}</p>
+      <p className="h3"> {votacion ? votacion.nombre : null}</p>
+      <p className="h5"> {votacion ? votacion.descripcion : null}</p>
       {itemsVotacion.length > 0 ? (
 
       <div>
-        <ul class="list-group list-group-flush">
+        <ul className="list-group list-group-flush">
           {itemsVotacion.map((item) => (
             <div key={item.id}>
             <VotacionItem item={item} />
@@ -42,9 +42,9 @@ const Votacion = () => {
       </div>
       ) : (
         <div className="row justify-content-center">
-            <figure class="text-center">
-              <hr class="hr" />
-              <p class="h4">No hay Items en esta votacion</p>
+            <figure className="text-center">
+              <hr classNames="hr" />
+              <p className="h4">No hay Items en esta votacion</p>
             </figure>
         </div>
       )}

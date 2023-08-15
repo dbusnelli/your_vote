@@ -32,7 +32,7 @@ const VotacionesList = (props) => {
 
   return (
     <>
-      <p class="h2">{mensajeVotacionesResult}</p>
+      <p className="h2">{mensajeVotacionesResult}</p>
       {votaciones.length > 0 ? (
         <div className="col-md-8">
           {votaciones.map((votacion) => (
@@ -41,14 +41,14 @@ const VotacionesList = (props) => {
         </div>
       ) : (
         <>
-          <p class="h4">{mensajeVotacionesNull}</p>
+          <p className="h4">{mensajeVotacionesNull}</p>
           <div className="row justify-content-center">
-            <figure class="text-center">
-              <hr class="hr" />
-              <p class="h4">{postScriptVotacionesNull}</p>
+            <figure className="text-center">
+              <hr className="hr" />
+              <p className="h4">{postScriptVotacionesNull}</p>
             </figure>
 
-            <button type="button" class="btn btn-primary w-25" onClick={handleCrearVotacionClick}>
+            <button type="button" className="btn btn-primary w-25" onClick={handleCrearVotacionClick}>
               Crear Votacion
             </button>
           </div>

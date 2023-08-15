@@ -27,15 +27,15 @@ const VotacionItem = (props) => {
 
   return (
     <>
-      <li class="list-group-item">
+      <li className="list-group-item">
         <p>
           {nombre} | Votos: {votos}
         </p>
-        <button type="button" class="btn btn-success" onClick={handleMas}>
+        <button type="button" className="btn btn-success" onClick={handleMas}>
           Votar
         </button>
         {usuarioVoto ?
-        <button type="button" class="btn btn-primary" onClick={handleGuardarVotos}>
+        <button type="button" className="btn btn-primary" onClick={handleGuardarVotos}>
         Guardar Votos
       </button>
         : null}

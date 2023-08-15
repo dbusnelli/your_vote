@@ -37,14 +37,14 @@ const VotacionesForm = () => {
 
   return (
     <>
-      <p class="h1">Agregue una Votacion</p>
-      <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon1">
+      <p className="h1">Agregue una Votacion</p>
+      <div className="input-group mb-3">
+        <span className="input-group-text" id="basic-addon1">
           Título de la votacion
         </span>
         <input
           type="text"
-          class="form-control"
+          className="form-control"
           placeholder="Ingrese un titulo"
           aria-label="Titulo"
           aria-describedby="basic-addon1"
@@ -52,13 +52,13 @@ const VotacionesForm = () => {
           value={titulo}
         ></input>
       </div>
-      <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon1">
+      <div className="input-group mb-3">
+        <span className="input-group-text" id="basic-addon1">
           Descripcion de la votacion
         </span>
         <input
           type="text"
-          class="form-control"
+          className="form-control"
           placeholder="Ingrese una descripcion"
           aria-label="Descripcion"
           aria-describedby="basic-addon1"
@@ -66,9 +66,9 @@ const VotacionesForm = () => {
           value={descripcion}
         ></input>
       </div>
-      <div class="row justify-content-start">
-        <div class="col-4">
-          <button type="button" class="btn btn-primary" onClick={handleSubmit}>
+      <div className="row justify-content-start">
+        <div className="col-4">
+          <button type="button" className="btn btn-primary" onClick={handleSubmit}>
             Agregar
           </button>
         </div>
