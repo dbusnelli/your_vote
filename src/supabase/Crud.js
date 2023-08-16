@@ -2,7 +2,7 @@ import { supabase } from "./Config";
 import { SUPABASE_VOTACIONES_COLLECTION, SUPABASE_ITEMS_VOTACIONES_COLLECTION} from "../utils/constants";
 
 export const fetchVotaciones = async (modificarVotaciones) => {
-  let result = await supabase.from(SUPABASE_VOTACIONES_COLLECTION).select("*");
+  let result = await supabase.from(SUPABASE_VOTACIONES_COLLECTION).select("*").order('created_at', { ascending: false });
   modificarVotaciones(result.data);
 };
 

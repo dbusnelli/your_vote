@@ -6,6 +6,7 @@ import { obtenerItemsVotacionByIdVotacion, obtenerVotacionById } from "../../sup
 import { useParams } from "react-router";
 import VotacionItemModalAgregar from "./VotacionItemModalAgregar";
 import Modal from 'react-bootstrap/Modal';
+import { toast, ToastContainer } from "react-toastify";
 
 const Votacion = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,19 @@ const Votacion = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const onSuccess = () => {
+    toast.success('Item agregado!', {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    }); 
+  }
 
   return (
     <>
@@ -69,12 +83,22 @@ const Votacion = () => {
           <Modal.Title>Item a Agregar</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <VotacionItemModalAgregar handleClose={handleClose} modificarItemsVotacion={modificarItemsVotacion} id={id}/>
+          <VotacionItemModalAgregar handleClose={handleClose} modificarItemsVotacion={modificarItemsVotacion} id={id} onSuccess={onSuccess}/>
         </Modal.Body>   
       </Modal>
+      <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
     </>
-      
-
   );
 };
 

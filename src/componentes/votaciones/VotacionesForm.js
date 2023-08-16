@@ -6,7 +6,9 @@ import { PATH_MIS_VOTACIONES } from "../../utils/constants";
 
 const VotacionesForm = () => {
   const [titulo, setTitulo] = useState("");
+  const [errorTitulo, setErrorTitulo] = useState(null);
   const [descripcion, setDescripcion] = useState("");
+  const [errorDescripcion, setErrorDescripcion] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -16,64 +18,82 @@ const VotacionesForm = () => {
         id: 1,
         nombre: titulo,
         descripcion: descripcion,
-      };
+      };   
       addVotacionOnSupabase(newVotacion);
-
       navigate(PATH_MIS_VOTACIONES);
     }
   };
 
   const validarCampos = () => {
-    if (titulo == "") {
-      alert("El titulo no puede quedar vacio");
-      return false;
+    let valido = true;
+    if (!titulo || titulo == "") {
+      setErrorTitulo("El titulo no puede quedar vacio")
+      valido = false;
+    }else{
+      setErrorTitulo(null);
     }
-    if (descripcion == "") {
-      alert("La descripcion no puede quedar vacia");
-      return false;
+    if (!descripcion || descripcion == "") {
+      setErrorDescripcion("La descripcion no puede quedar vacia");
+      valido = false;
+    }else{
+      setErrorDescripcion(null)
     }
-    return true;
+    return valido;
   };
 
+  
+
   return (
-    <>
+    <div className="w-75">
       <p className="h1">Agregue una Votacion</p>
-      <div className="input-group mb-3">
-        <span className="input-group-text" id="basic-addon1">
-          Título de la votacion
-        </span>
+      <div className="form-group row">
+        <label htmlFor="tituloVotacion" className="col-form-label">
+          Titulo de la Votacion
+        </label>
         <input
           type="text"
-          className="form-control"
+          className={errorTitulo ? "form-control is-invalid" : "form-control"}
           placeholder="Ingrese un titulo"
           aria-label="Titulo"
           aria-describedby="basic-addon1"
           onChange={(e) => setTitulo(e.target.value)}
           value={titulo}
+          id="tituloVotacion"
         ></input>
+        {errorTitulo ? <div class="invalid-feedback">{errorTitulo}</div> : null}
       </div>
-      <div className="input-group mb-3">
-        <span className="input-group-text" id="basic-addon1">
-          Descripcion de la votacion
-        </span>
+      <div className="form-group row">
+        <label htmlFor="descripcionVotacion" className="col-form-label">
+          Describe la Votacion
+        </label>
         <input
           type="text"
-          className="form-control"
+          className={
+            errorDescripcion ? "form-control is-invalid" : "form-control"
+          }
           placeholder="Ingrese una descripcion"
           aria-label="Descripcion"
           aria-describedby="basic-addon1"
           onChange={(e) => setDescripcion(e.target.value)}
           value={descripcion}
+          id="descripcionVotacion"
         ></input>
+        {errorDescripcion ? (
+          <div class="invalid-feedback">{errorDescripcion}</div>
+        ) : null}
       </div>
-      <div className="row justify-content-start">
+      <div className="row justify-content-start mt-3">
         <div className="col-4">
-          <button type="button" className="btn btn-primary" onClick={handleSubmit}>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={handleSubmit}
+          >
             Agregar
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
