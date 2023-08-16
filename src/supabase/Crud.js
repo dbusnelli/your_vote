@@ -1,5 +1,5 @@
 import { supabase } from "./Config";
-import { SUPABASE_VOTACIONES_COLLECTION } from "../utils/constants";
+import { SUPABASE_VOTACIONES_COLLECTION, SUPABASE_ITEMS_VOTACIONES_COLLECTION} from "../utils/constants";
 
 export const fetchVotaciones = async (modificarVotaciones) => {
   let result = await supabase.from(SUPABASE_VOTACIONES_COLLECTION).select("*");
@@ -22,18 +22,33 @@ export const obtenerVotacionById = async (id, modificarVotacionActual) => {
   modificarVotacionActual(result.data[0]);
 };
 
-export const obtenerItemsVotacionById = async (id, modificarItemsVotacion) => {
-  let result = await supabase.from('items_votaciones').select('*').eq('id_votacion', id);
+export const obtenerItemsVotacionByIdVotacion = async (idVotacion, modificarItemsVotacion) => {
+  let result = await supabase.from(SUPABASE_ITEMS_VOTACIONES_COLLECTION).select('*').eq('id_votacion', idVotacion).order('votos', { ascending: false });
   modificarItemsVotacion(result.data);
 };
 
 export const updateItemVotacion = async(itemVotacion, modificarItemsVotacion) => {
   
   const { data, error } = await supabase
-    .from('items_votaciones')
+    .from(SUPABASE_ITEMS_VOTACIONES_COLLECTION)
     .update({ votos: itemVotacion.votos , nombre: itemVotacion.nombre }, {nombre: itemVotacion.nombre})
     .eq('id', itemVotacion.id)
     .select();
-  console.log(data);
-  modificarItemsVotacion(data);
+
+  console.log(data[0])
+
+  let result = await supabase.from(SUPABASE_ITEMS_VOTACIONES_COLLECTION).select('*').eq('id_votacion', data[0].id_votacion).order('votos', { ascending: false });
+  modificarItemsVotacion(result.data);
+}
+
+export const addItemVotacion = async(itemVotacion, modificarItemsVotacion) => {
+  let idVotacion = itemVotacion.idVotacion;
+  await supabase
+  .from(SUPABASE_ITEMS_VOTACIONES_COLLECTION)
+  .insert([
+    { id_votacion: idVotacion, nombre: itemVotacion.nombre, votos: 0 },
+  ]);
+
+  let result = await supabase.from(SUPABASE_ITEMS_VOTACIONES_COLLECTION).select('*').eq('id_votacion', idVotacion).order('votos', { ascending: false });
+  modificarItemsVotacion(result.data);
 }

@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { modifyItemsVotaciones } from "../../redux/reducers/votaciones";
-import { obtenerItemsVotacionById, updateItemVotacion } from "../../supabase/Crud";
-//import { updateItemVotacion } from "../../supabase/Crud";
+import { obtenerItemsVotacionByIdVotacion, updateItemVotacion } from "../../supabase/Crud";
 
 const VotacionItem = (props) => {
   const [id, setId] = useState(props.item.id);
