@@ -51,9 +51,17 @@ export const addItemVotacion = async(itemVotacion, modificarItemsVotacion) => {
   modificarItemsVotacion(result.data);
 }
 
-export const existeNombreUsuario = async(nombre, searchOver) => {
+export const existeNombreUsuarioOMail = async(nombre, email, searchOver) => {
   let result = await supabase.from(SUPABASE_USUARIOS_COLLECTION).select('*').eq('nombre', nombre);
-  searchOver(result.data.length > 0);
+  let result2 = await supabase.from(SUPABASE_USUARIOS_COLLECTION).select('*').eq('email', email);
+
+  console.log(result2.data);
+  let dataResult = {
+    existeUsuario :  result.data.length > 0,
+    existeEmail: result2.data.length > 0
+  }
+
+  searchOver(dataResult);
 }
 
 export const addUsuario = async(usuario, success) => {

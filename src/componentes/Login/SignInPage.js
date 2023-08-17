@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { setUsuario } from "../../redux/reducers/usuario";
-import { addUsuario, existeNombreUsuario } from "../../supabase/Crud";
+import { addUsuario, existeNombreUsuarioOMail } from "../../supabase/Crud";
 import { MINIMO_CARACTERES_NOMBRE, MINIMO_CARACTERES_PASSWORD, PATH_HOME } from "../../utils/constants";
 
 const SignInPage = () => {
@@ -21,21 +21,28 @@ const SignInPage = () => {
     const handleSubmit = async(e) => {
       e.preventDefault();
       if (validarCampos()) {
-        await existeNombreUsuario(nombre, searchOver);
+        await existeNombreUsuarioOMail(nombre, email, searchOver);
       }
     };
 
-    const searchOver = (existeUsuario) => {
-        if(existeUsuario){
-            setErrorNombre("El nombre de usuario no esta disponible")
-        }else{
+    const searchOver = async(result) => {
+        let valido = true;
+        if(result.existeUsuario){
+            valido = false;
+            setErrorNombre("El nombre de usuario no esta disponible");
+        }
+        if(result.existeEmail){
+            valido = false;
+            setErrorEmail("Ya existe un usuario con ese email");
+        }
+        if(valido){
             let usuario = {
                 nombre: nombre,
                 password: password,
                 email: email
             }
 
-            addUsuario(usuario, succes)
+            await addUsuario(usuario, succes)
         }
     }
 

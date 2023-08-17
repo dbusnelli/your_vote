@@ -125,7 +125,7 @@ const NavBar = () => {
         <Modal.Header closeButton>
           <Modal.Title>Desloguearse</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Seguro que desea desloguearse</Modal.Body>
+        <Modal.Body>¿Seguro que desea desloguearse?</Modal.Body>
         <Modal.Footer>
           <button
             className="btn btn-secondary w-25"
