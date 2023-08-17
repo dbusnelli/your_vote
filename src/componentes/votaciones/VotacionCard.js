@@ -5,12 +5,13 @@ const VotacionCard = (props) => {
   const votacionId = props.votacion.id;
   const votacionTitulo = props.votacion.nombre;
   const votacionDescripcion = props.votacion.descripcion;
+  const usuarioQueLoCreo = props.votacion.created_by;
 
   return (
     <div className="card mb-3">
       <div className="card-body">
         <h4 className="card-title">{votacionTitulo}</h4>
-        <h6 className="card-subtitle mb-2 text-muted">Creado por un usuario</h6>
+        <h6 className="card-subtitle mb-2 text-muted">Creado por {usuarioQueLoCreo}</h6>
         <p className="card-text">{votacionDescripcion}</p>
         <Link to={PATH_VOTACION_DETALLE + votacionId} className="card-link">
           Ver Votacion

@@ -20,5 +20,5 @@ export const CHEQUEA_ESTAS_VOTACIONES = "Echale un vistazo a lo que la gente opi
 export const SE_EL_PRIMERO = "Se el primero en crear una Votacion al respecto";
 export const CREA_TU_PRIMERA_VOTACION = "Crea tu primera Votacion: ";
 
-export const MINIMO_CARACTERES_NOMBRE = 8;
+export const MINIMO_CARACTERES_NOMBRE = 6;
 export const MINIMO_CARACTERES_PASSWORD = 8;

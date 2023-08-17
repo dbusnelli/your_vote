@@ -26,6 +26,7 @@ const VotacionesForm = () => {
         id: 1,
         nombre: titulo,
         descripcion: descripcion,
+        created_by: usuario.nombre
       };   
       addVotacionOnSupabase(newVotacion);
       navigate(PATH_MIS_VOTACIONES);

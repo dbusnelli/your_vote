@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { modifyVotaciones } from "../../redux/reducers/votaciones";
-import { fetchVotaciones } from "../../supabase/Crud";
+import { fetchVotaciones, fetchVotacionesByUsername } from "../../supabase/Crud";
 import { CHEQUEA_ESTAS_VOTACIONES, CREA_TU_PRIMERA_VOTACION, PATH_CREAR_VOTACION, PATH_HOME, RESULTADO_BUSQUEDA, SE_EL_PRIMERO, SIN_RESULTADOS, SIN_VOTACIONES_USUARIO, SUS_VOTACIONES } from "../../utils/constants";
 import VotacionCard from "./VotacionCard";
 
@@ -13,6 +13,7 @@ const VotacionesList = (props) => {
   const misVotaciones = props.misVotaciones;
   const search = props.search;
   const navigate = useNavigate();
+  const win = window.sessionStorage;
 
   const mensajeVotacionesResult = misVotaciones ? SUS_VOTACIONES : search ? RESULTADO_BUSQUEDA : CHEQUEA_ESTAS_VOTACIONES;
   const mensajeVotacionesNull = misVotaciones ? SIN_VOTACIONES_USUARIO : search ? SIN_RESULTADOS : null;
@@ -20,10 +21,13 @@ const VotacionesList = (props) => {
   const pathOfButton = PATH_CREAR_VOTACION;
 
   useEffect(() => {
-    if(misVotaciones && !usuario){
+    if(misVotaciones && win.getItem('userName')){
+      fetchVotacionesByUsername(win.getItem('userName'), modificarVotaciones);
+    }else if(!misVotaciones){
+      fetchVotaciones(modificarVotaciones);
+    }else{
       navigate(PATH_HOME);
     }
-    fetchVotaciones(modificarVotaciones);
   }, []);
 
   const modificarVotaciones = (data) => {

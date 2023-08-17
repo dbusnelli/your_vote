@@ -6,13 +6,20 @@ export const fetchVotaciones = async (modificarVotaciones) => {
   modificarVotaciones(result.data);
 };
 
+export const fetchVotacionesByUsername = async(userName, modificarVotaciones) => {
+  let result = await supabase.from(SUPABASE_VOTACIONES_COLLECTION).select("*").eq('created_by', userName).order('created_at', { ascending: false });
+  console.log(result.data);
+  modificarVotaciones(result.data);
+}
+
 export const addVotacionOnSupabase = async (votacion) => {
 
   await supabase
   .from(SUPABASE_VOTACIONES_COLLECTION)
   .insert([{
       nombre: votacion.nombre,
-      descripcion: votacion.descripcion 
+      descripcion: votacion.descripcion,
+      created_by: votacion.created_by
   },])
 
 }
