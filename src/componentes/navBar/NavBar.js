@@ -1,19 +1,35 @@
 import Modal from 'react-bootstrap/Modal';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { PATH_CREAR_VOTACION, PATH_HOME, PATH_LOGIN, PATH_MIS_VOTACIONES } from "../../utils/constants";
 import Searcher from "../votaciones/Searcher";
 import { useDispatch, useSelector } from 'react-redux';
 import { setUsuario } from '../../redux/reducers/usuario';
+import { getUsuarioByNombre } from '../../supabase/Crud';
 
 const NavBar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showModalLogout, setShowModalLogout] = useState(false);
-  const dispatch = useDispatch();
   const usuario = useSelector((state) => state.usuario.usuario);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const win = window.sessionStorage;
 
   const menuClass = `dropdown-menu${dropdownOpen ? " show" : ""}`;
+
+  useEffect(() => {
+    loadUserName();
+  }, [])
+
+  const loadUserName = async() => {
+    if(win.getItem('userName')) {
+      getUsuarioByNombre(win.getItem('userName'), succesSearchUsername);
+    }
+  }
+
+  const succesSearchUsername = (result) => {
+    dispatch(setUsuario(result));
+  }
 
   const toggleOpen = () => {
     setDropdownOpen(!dropdownOpen);
@@ -25,7 +41,8 @@ const NavBar = () => {
 
   const onLogout = () => {
     handleCloseModalLogout();
-    dispatch(setUsuario(null))
+    dispatch(setUsuario(null));
+    sessionStorage.removeItem('userName')
     navigate(PATH_HOME);
   }
   

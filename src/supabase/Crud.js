@@ -81,3 +81,8 @@ export const getUsuarioByNombreYPass = async(usuario, success) => {
 
   result.data ? success(result.data[0]) : success(null);
 }
+
+export const getUsuarioByNombre = async(usuario, success) => {
+  let result = await supabase.from(SUPABASE_USUARIOS_COLLECTION).select('*').eq('nombre', usuario);
+  success(result.data[0]);
+}

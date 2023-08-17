@@ -14,6 +14,7 @@ const LoginPage = () => {
     const [intentos, setIntentos] = useState(0);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const win = window.sessionStorage;
 
     const handleSubmit = async(e) => {
       e.preventDefault();
@@ -29,6 +30,7 @@ const LoginPage = () => {
         setError("No hay ningun usuario que coincida");
         setIntentos(intentos + 1);
       } else {
+        win.setItem('userName', result.nombre);
         dispatch(setUsuario(result));
         navigate(PATH_HOME)
       }

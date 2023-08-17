@@ -17,6 +17,7 @@ const SignInPage = () => {
     const [errorEmail, setErrorEmail] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const win = window.sessionStorage;
 
     const handleSubmit = async(e) => {
       e.preventDefault();
@@ -47,7 +48,8 @@ const SignInPage = () => {
     }
 
     const succes = (data) => {
-        dispatch(setUsuario(data))
+        win.setItem('userName', data.nombre);
+        dispatch(setUsuario(data));
         navigate(PATH_HOME);
     }
 
