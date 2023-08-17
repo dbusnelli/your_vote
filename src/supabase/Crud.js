@@ -1,5 +1,5 @@
 import { supabase } from "./Config";
-import { SUPABASE_VOTACIONES_COLLECTION, SUPABASE_ITEMS_VOTACIONES_COLLECTION} from "../utils/constants";
+import { SUPABASE_VOTACIONES_COLLECTION, SUPABASE_ITEMS_VOTACIONES_COLLECTION, SUPABASE_USUARIOS_COLLECTION} from "../utils/constants";
 
 export const fetchVotaciones = async (modificarVotaciones) => {
   let result = await supabase.from(SUPABASE_VOTACIONES_COLLECTION).select("*").order('created_at', { ascending: false });
@@ -29,13 +29,11 @@ export const obtenerItemsVotacionByIdVotacion = async (idVotacion, modificarItem
 
 export const updateItemVotacion = async(itemVotacion, modificarItemsVotacion) => {
   
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from(SUPABASE_ITEMS_VOTACIONES_COLLECTION)
     .update({ votos: itemVotacion.votos , nombre: itemVotacion.nombre }, {nombre: itemVotacion.nombre})
     .eq('id', itemVotacion.id)
     .select();
-
-  console.log(data[0])
 
   let result = await supabase.from(SUPABASE_ITEMS_VOTACIONES_COLLECTION).select('*').eq('id_votacion', data[0].id_votacion).order('votos', { ascending: false });
   modificarItemsVotacion(result.data);
@@ -51,4 +49,27 @@ export const addItemVotacion = async(itemVotacion, modificarItemsVotacion) => {
 
   let result = await supabase.from(SUPABASE_ITEMS_VOTACIONES_COLLECTION).select('*').eq('id_votacion', idVotacion).order('votos', { ascending: false });
   modificarItemsVotacion(result.data);
+}
+
+export const existeNombreUsuario = async(nombre, searchOver) => {
+  let result = await supabase.from(SUPABASE_USUARIOS_COLLECTION).select('*').eq('nombre', nombre);
+  searchOver(result.data.length > 0);
+}
+
+export const addUsuario = async(usuario, success) => {
+  const { data } = await supabase
+  .from(SUPABASE_USUARIOS_COLLECTION)
+  .insert([
+    { nombre: usuario.nombre, password: usuario.password , email: usuario.email },
+  ])
+  .select()
+
+  success(data[0]);
+
+}
+
+export const getUsuarioByNombreYPass = async(usuario, success) => {
+  let result = await supabase.from(SUPABASE_USUARIOS_COLLECTION).select('*').eq('nombre', usuario.nombre).eq('password', usuario.password);
+
+  result.data ? success(result.data[0]) : success(null);
 }

@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { modifyVotaciones } from "../../redux/reducers/votaciones";
 import { fetchVotaciones } from "../../supabase/Crud";
-import { CHEQUEA_ESTAS_VOTACIONES, CREA_TU_PRIMERA_VOTACION, PATH_CREAR_VOTACION, RESULTADO_BUSQUEDA, SE_EL_PRIMERO, SIN_RESULTADOS, SIN_VOTACIONES_USUARIO, SUS_VOTACIONES } from "../../utils/constants";
+import { CHEQUEA_ESTAS_VOTACIONES, CREA_TU_PRIMERA_VOTACION, PATH_CREAR_VOTACION, PATH_HOME, RESULTADO_BUSQUEDA, SE_EL_PRIMERO, SIN_RESULTADOS, SIN_VOTACIONES_USUARIO, SUS_VOTACIONES } from "../../utils/constants";
 import VotacionCard from "./VotacionCard";
 
 const VotacionesList = (props) => {
   const votaciones = useSelector((state) => state.votaciones.votaciones);
+  const usuario = useSelector((state) => state.usuario.usuario)
   const dispatch = useDispatch();
   const misVotaciones = props.misVotaciones;
   const search = props.search;
@@ -19,6 +20,9 @@ const VotacionesList = (props) => {
   const pathOfButton = PATH_CREAR_VOTACION;
 
   useEffect(() => {
+    if(misVotaciones && !usuario){
+      navigate(PATH_HOME);
+    }
     fetchVotaciones(modificarVotaciones);
   }, []);
 
@@ -32,7 +36,7 @@ const VotacionesList = (props) => {
 
   return (
     <>
-      <p className="h2">{mensajeVotacionesResult}</p>
+      <p className="h2 mb-3">{mensajeVotacionesResult}</p>
       {votaciones.length > 0 ? (
         <div className="col-md-8">
           {votaciones.map((votacion) => (

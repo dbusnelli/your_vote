@@ -1,7 +1,8 @@
-import { useState  } from "react";
+import { useEffect, useState  } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addVotacionOnSupabase } from "../../supabase/Crud";
-import { PATH_MIS_VOTACIONES } from "../../utils/constants";
+import { PATH_HOME, PATH_MIS_VOTACIONES } from "../../utils/constants";
 
 
 const VotacionesForm = () => {
@@ -10,10 +11,17 @@ const VotacionesForm = () => {
   const [descripcion, setDescripcion] = useState("");
   const [errorDescripcion, setErrorDescripcion] = useState(false);
   const navigate = useNavigate();
+  const usuario = useSelector((state) => state.usuario.usuario);
+
+  useEffect(() => {
+    if(!usuario){
+      navigate(PATH_HOME);
+    }
+  }, [])
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     if (validarCampos()) {
-      e.preventDefault();
       let newVotacion = {
         id: 1,
         nombre: titulo,
@@ -55,12 +63,11 @@ const VotacionesForm = () => {
           className={errorTitulo ? "form-control is-invalid" : "form-control"}
           placeholder="Ingrese un titulo"
           aria-label="Titulo"
-          aria-describedby="basic-addon1"
           onChange={(e) => setTitulo(e.target.value)}
           value={titulo}
           id="tituloVotacion"
         ></input>
-        {errorTitulo ? <div class="invalid-feedback">{errorTitulo}</div> : null}
+        {errorTitulo ? <div className="invalid-feedback">{errorTitulo}</div> : null}
       </div>
       <div className="form-group row">
         <label htmlFor="descripcionVotacion" className="col-form-label">
@@ -73,13 +80,12 @@ const VotacionesForm = () => {
           }
           placeholder="Ingrese una descripcion"
           aria-label="Descripcion"
-          aria-describedby="basic-addon1"
           onChange={(e) => setDescripcion(e.target.value)}
           value={descripcion}
           id="descripcionVotacion"
         ></input>
         {errorDescripcion ? (
-          <div class="invalid-feedback">{errorDescripcion}</div>
+          <div className="invalid-feedback">{errorDescripcion}</div>
         ) : null}
       </div>
       <div className="row justify-content-start mt-3">

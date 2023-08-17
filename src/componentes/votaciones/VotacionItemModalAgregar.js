@@ -61,7 +61,7 @@ const VotacionItemModalAgregar= (props) => {
                   onChange={(e) => setnombre(e.target.value)}
                 />
                 {errorNombre ? (
-                  <div class="invalid-feedback">{errorNombre}</div>
+                  <div className="invalid-feedback">{errorNombre}</div>
                 ) : null}
               </div>
             </div>

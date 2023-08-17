@@ -1,11 +1,17 @@
+import Modal from 'react-bootstrap/Modal';
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PATH_CREAR_VOTACION, PATH_HOME, PATH_LOGIN, PATH_MIS_VOTACIONES } from "../../utils/constants";
 import Searcher from "../votaciones/Searcher";
+import { useDispatch, useSelector } from 'react-redux';
+import { setUsuario } from '../../redux/reducers/usuario';
 
 const NavBar = () => {
-  const [isLogged, setIsLogged] = useState(true);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [showModalLogout, setShowModalLogout] = useState(false);
+  const dispatch = useDispatch();
+  const usuario = useSelector((state) => state.usuario.usuario);
+  const navigate = useNavigate();
 
   const menuClass = `dropdown-menu${dropdownOpen ? " show" : ""}`;
 
@@ -17,11 +23,15 @@ const NavBar = () => {
     setDropdownOpen(false);
   };
 
-  const handleLogout = () => {
-    if(window.confirm("¿Desea desloguearse?")){
-        setIsLogged(false);
-    }
+  const onLogout = () => {
+    handleCloseModalLogout();
+    dispatch(setUsuario(null))
+    navigate(PATH_HOME);
   }
+  
+
+  const handleCloseModalLogout = () => setShowModalLogout(false);
+  const handleShowModalLogout = () => setShowModalLogout(true);
 
   return (
     <nav className="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
@@ -48,7 +58,7 @@ const NavBar = () => {
               </Link>
             </li>
 
-            {isLogged ? (
+            {usuario ? (
               <>
                 <li className="nav-item dropdown" onMouseLeave={closeDropdown}>
                   <a
@@ -79,16 +89,16 @@ const NavBar = () => {
         </div>
         <div>
           <ul className="navbar-nav d-flex container-fluid">
-          <li className="nav-item me-1">
-            <Searcher/>
-          </li>
-            {isLogged ? (
+            <li className="nav-item me-1">
+              <Searcher />
+            </li>
+            {usuario ? (
               <>
                 <li className="nav-item">
                   <a
                     className="nav-link"
                     aria-current="page"
-                    onClick={handleLogout}
+                    onClick={handleShowModalLogout}
                     href="#"
                   >
                     Log Out
@@ -98,7 +108,11 @@ const NavBar = () => {
             ) : (
               <>
                 <li className="nav-item">
-                  <Link className="nav-link" aria-current="page" to={PATH_LOGIN}>
+                  <Link
+                    className="nav-link"
+                    aria-current="page"
+                    to={PATH_LOGIN}
+                  >
                     Login
                   </Link>
                 </li>
@@ -107,6 +121,23 @@ const NavBar = () => {
           </ul>
         </div>
       </div>
+      <Modal show={showModalLogout} onHide={handleCloseModalLogout}>
+        <Modal.Header closeButton>
+          <Modal.Title>Desloguearse</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Seguro que desea desloguearse</Modal.Body>
+        <Modal.Footer>
+          <button
+            className="btn btn-secondary w-25"
+            onClick={handleCloseModalLogout}
+          >
+            No
+          </button>
+          <button className="btn btn-primary w-25" onClick={onLogout}>
+            Si, por favor
+          </button>
+        </Modal.Footer>
+      </Modal>
     </nav>
   );
 };
