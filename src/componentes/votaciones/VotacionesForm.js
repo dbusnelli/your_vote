@@ -10,6 +10,7 @@ const VotacionesForm = () => {
   const [errorTitulo, setErrorTitulo] = useState(null);
   const [descripcion, setDescripcion] = useState("");
   const [errorDescripcion, setErrorDescripcion] = useState(false);
+  const [maximoVotoUsuario, setMaximoVotoUsuario] = useState(5);
   const navigate = useNavigate();
   const usuario = useSelector((state) => state.usuario.usuario);
 
@@ -26,7 +27,8 @@ const VotacionesForm = () => {
         id: 1,
         nombre: titulo,
         descripcion: descripcion,
-        created_by: usuario.nombre
+        created_by: usuario.nombre,
+        maximoVotoUsuario: maximoVotoUsuario
       };   
       addVotacionOnSupabase(newVotacion);
       navigate(PATH_MIS_VOTACIONES);
@@ -68,7 +70,9 @@ const VotacionesForm = () => {
           value={titulo}
           id="tituloVotacion"
         ></input>
-        {errorTitulo ? <div className="invalid-feedback">{errorTitulo}</div> : null}
+        {errorTitulo ? (
+          <div className="invalid-feedback">{errorTitulo}</div>
+        ) : null}
       </div>
       <div className="form-group row">
         <label htmlFor="descripcionVotacion" className="col-form-label">
@@ -89,7 +93,24 @@ const VotacionesForm = () => {
           <div className="invalid-feedback">{errorDescripcion}</div>
         ) : null}
       </div>
-      <div className="row justify-content-start mt-3">
+      <div class="form-group row">
+        <label for="selectMaxVotos" class="form-label mt-1">
+          Maximo de Votos por Usuario
+        </label>
+        <select
+          class="form-select"
+          id="selectMaxVotos"
+          value={maximoVotoUsuario}
+          onChange={(e) => setMaximoVotoUsuario(e.target.value)}
+        >
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </div>
+      <div className="row justify-content-start mt-4">
         <div className="col-4">
           <button
             type="button"

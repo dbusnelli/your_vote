@@ -1,31 +1,37 @@
+import Modal from 'react-bootstrap/Modal';
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { modifyItemsVotaciones } from "../../redux/reducers/votaciones";
-import { obtenerItemsVotacionByIdVotacion, updateItemVotacion } from "../../supabase/Crud";
+import { useDispatch, useSelector } from "react-redux";
+import { updateCantVotosByUsuario, updateItemVotacion } from "../../supabase/Crud";
 
 const VotacionItem = (props) => {
   const [id, setId] = useState(props.item.id);
+  const votacionActual = useSelector((state) => state.votaciones.votacionActual);
   const [nombre, setNombre] = useState(props.item.nombre);
   const [votos, setVotos] = useState(props.item.votos);
+  const [showModalConfirmVoto, setShowModalConfirmVoto] = useState(false);
   const dispatch = useDispatch();
+  const usuario = useSelector((state) => state.usuario.usuario);
 
-  const [usuarioVoto, setUsuarioVoto] = useState(false);
-
-  const handleMas = () => {
+  const handleVotar = () => {
     let newVotos = votos + 1;
     setVotos(newVotos);
-    setUsuarioVoto(true);
-  };
-
-  const handleGuardarVotos = () => {
+    handleCloseModalConfirmVoto();
+    props.onAgregarVoto();
     let data = {
       id: id,
       nombre: nombre,
-      votos: votos
+      votos: newVotos
     }
-    setUsuarioVoto(false);
     updateItemVotacion(data, props.modificarItemsVotacion);
-  }
+    data = {
+      id_votacion: votacionActual.id,
+      usuario: usuario.nombre
+    }
+    updateCantVotosByUsuario(data);
+  };
+
+  const handleCloseModalConfirmVoto = () => setShowModalConfirmVoto(false);
+  const handleShowModalConfirmVoto = () => setShowModalConfirmVoto(true);
 
   return (
     <>
@@ -33,16 +39,31 @@ const VotacionItem = (props) => {
         <p>
           {nombre} | Votos: {votos}
         </p>
-        <button type="button" className="btn btn-success" onClick={handleMas}>
+        {!props.sinVotos && usuario ?
+        <button type="button" className="btn btn-success" onClick={handleShowModalConfirmVoto}>
           Votar
         </button>
-        {usuarioVoto ?
-        <button type="button" className="btn btn-primary" onClick={handleGuardarVotos}>
-        Guardar Votos
-      </button>
         : null}
         
       </li>
+
+      <Modal show={showModalConfirmVoto} onHide={handleCloseModalConfirmVoto}>
+        <Modal.Header closeButton>
+          <Modal.Title>Votar por Item</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>¿Seguro que desea votar por el Item: <span className = "text-info">{nombre}</span>?</Modal.Body>
+        <Modal.Footer>
+          <button className="btn btn-primary w-25" onClick={handleVotar}>
+            Si, por favor
+          </button>
+          <button
+            className="btn btn-secondary w-25"
+            onClick={handleCloseModalConfirmVoto}
+          >
+            No
+          </button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

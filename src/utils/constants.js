@@ -1,6 +1,7 @@
 export const SUPABASE_VOTACIONES_COLLECTION = 'votaciones';
 export const SUPABASE_ITEMS_VOTACIONES_COLLECTION = 'items_votaciones';
-export const SUPABASE_USUARIOS_COLLECTION = 'usuarios'
+export const SUPABASE_USUARIOS_COLLECTION = 'usuarios';
+export const SUPABASE_VOTACIONES_POR_USUARIO_COLLECTION = 'votosItemsXUsuario';
 
 export const PATH_HOME = "/";
 export const PATH_MIS_VOTACIONES = "/misVotaciones";

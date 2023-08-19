@@ -144,14 +144,14 @@ const NavBar = () => {
         </Modal.Header>
         <Modal.Body>¿Seguro que desea desloguearse?</Modal.Body>
         <Modal.Footer>
+          <button className="btn btn-primary w-25" onClick={onLogout}>
+            Si, por favor
+          </button>
           <button
             className="btn btn-secondary w-25"
             onClick={handleCloseModalLogout}
           >
             No
-          </button>
-          <button className="btn btn-primary w-25" onClick={onLogout}>
-            Si, por favor
           </button>
         </Modal.Footer>
       </Modal>
