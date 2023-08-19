@@ -44,9 +44,12 @@ const VotacionesList = (props) => {
 
   return (
     <>
-      <p className="h2 mb-3">{mensajeVotacionesResult}</p>
+      <div className="d-flex mb-3">
+      <img src ="favicon.ico" width="15%"/>
+      <p className="h2 mt-5 bold align-middle">{mensajeVotacionesResult}</p>
+      </div>
       {votaciones.length > 0 ? (
-        <div className="col-md-8">
+        <div className="justify-content-center">
           {votaciones.map((votacion) => (
             <div key={votacion.id}>{<VotacionCard votacion={votacion} />}</div>
           ))}
