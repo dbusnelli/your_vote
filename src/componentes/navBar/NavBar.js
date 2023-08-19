@@ -56,28 +56,20 @@ const NavBar = () => {
         <p className="navbar-brand ms-3" href="#">
           YourVote
         </p>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link className="nav-link" aria-current="page" to={PATH_HOME}>
+              <Link className="nav-link ms-1" aria-current="page" to={PATH_HOME}>
                 Inicio
               </Link>
             </li>
 
             {usuario ? (
               <>
-                <li className="nav-item dropdown" onMouseLeave={closeDropdown}>
+                <li className="nav-item dropdown ms-1" onMouseLeave={closeDropdown}>
                   <a
                     className="nav-link dropdown-toggle"
                     role="button"
@@ -111,7 +103,7 @@ const NavBar = () => {
             </li>
             {usuario ? (
               <>
-                <li className="nav-item">
+                <li className="nav-item ms-1">
                   <a
                     className="nav-link"
                     aria-current="page"
@@ -124,7 +116,7 @@ const NavBar = () => {
               </>
             ) : (
               <>
-                <li className="nav-item">
+                <li className="nav-item ms-1">
                   <Link
                     className="nav-link"
                     aria-current="page"

@@ -10,6 +10,48 @@ export const fetchVotaciones = async (modificarVotaciones) => {
 export const fetchVotacionesByUsername = async(userName, modificarVotaciones) => {
   let result = await supabase.from(SUPABASE_VOTACIONES_COLLECTION).select("*").eq('created_by', userName).order('created_at', { ascending: false });
   modificarVotaciones(result.data);
+};
+
+export const fetchVotacionesByFiltro = async(filtro, modificarVotaciones) => {
+  var fil = decodeURI(filtro);
+  const filtroFinal = fil.replace(/\s/g, ' or ');
+  let result = await supabase.from(SUPABASE_VOTACIONES_COLLECTION).select("*").order('created_at', { ascending: false })
+  .textSearch('nombre', filtroFinal , {
+    type: 'websearch',
+    config: 'english'
+  })
+  let result2 = await supabase.from(SUPABASE_VOTACIONES_COLLECTION).select("*").order('created_at', { ascending: false })
+  .textSearch('created_by', filtroFinal, {
+    type: 'websearch',
+    config: 'english'
+  })
+  let result3 = await supabase.from(SUPABASE_VOTACIONES_COLLECTION).select("*").order('created_at', { ascending: false })
+  .textSearch('descripcion', filtroFinal, {
+    type: 'websearch',
+    config: 'english'
+  })
+
+  let finalResult = [];
+  finalResult = result.data.length > 0 ? finalResult.concat(result.data) : finalResult;
+  finalResult = result2.data.length > 0 ? finalResult.concat(result2.data) : finalResult;
+  finalResult = result3.data.length > 0 ? finalResult.concat(result3.data) : finalResult;
+  let busquedaFinal = null;
+  
+  if(finalResult.length > 0){
+    const uniqueIds = [];
+    busquedaFinal = finalResult.filter(element => {
+      const isDuplicate = uniqueIds.includes(element.id);
+  
+      if (!isDuplicate) {
+        uniqueIds.push(element.id);
+  
+        return true;
+      }
+  
+      return false;
+    });
+  }
+  modificarVotaciones(busquedaFinal ? busquedaFinal : [])
 }
 
 export const addVotacionOnSupabase = async (votacion) => {
