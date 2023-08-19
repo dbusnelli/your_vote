@@ -10,7 +10,7 @@ const VotacionesForm = () => {
   const [errorTitulo, setErrorTitulo] = useState(null);
   const [descripcion, setDescripcion] = useState("");
   const [errorDescripcion, setErrorDescripcion] = useState(false);
-  const [maximoVotoUsuario, setMaximoVotoUsuario] = useState(5);
+  const [maximoVotoUsuario, setMaximoVotoUsuario] = useState(1);
   const navigate = useNavigate();
   const usuario = useSelector((state) => state.usuario.usuario);
 
