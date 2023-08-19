@@ -7,6 +7,7 @@ import { useParams } from "react-router";
 import VotacionItemModalAgregar from "./VotacionItemModalAgregar";
 import Modal from 'react-bootstrap/Modal';
 import { toast, ToastContainer } from "react-toastify";
+import { PATH_LOGIN } from "../../utils/constants";
 
 const Votacion = () => {
   const dispatch = useDispatch();
@@ -74,7 +75,7 @@ const Votacion = () => {
         disponibles.
       </p>
       :<p className="h4 text-warning">
-        Para poder votar o agregar Items necesita estar logueado
+        Para poder votar o agregar Items necesita estar <a href={PATH_LOGIN}>logueado</a>
       </p>}
       {itemsVotacion.length > 0 ? (
         <div className="w-75 mt-3">
